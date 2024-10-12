@@ -1,0 +1,65 @@
+'use client'
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const HomePage = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission
+
+    try {
+      const response = await axios.post('https://check-fast-postgre.vercel.app/add-user', {
+        username,
+        email,
+      });
+
+      if (response.data.status === "User added successfully") {
+        setMessage('User added successfully!');
+        setError(null); // Clear any previous errors
+        // Clear the form fields
+
+      }
+    } catch (err) {
+      setError('Error adding user');
+      console.error('Error details:', err.response ? err.response.data : err);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Add User</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+
+      {message && <p>{message}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+    </div>
+  );
+};
+
+export default HomePage;
