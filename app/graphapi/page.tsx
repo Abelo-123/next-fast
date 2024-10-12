@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import client from '../lib/apolloClient'; // Adjust the path based on where you saved apolloClient.js
 
@@ -17,7 +17,7 @@ const UserForm = () => {
     const [email, setEmail] = useState('');
     const [insertUser] = useMutation(INSERT_USER, { client });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
             // Prepare the objects array for the mutation
