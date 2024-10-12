@@ -31,7 +31,7 @@ const UserForm = () => {
 
 
         } catch (error) {
-            console.error('Error adding user:', error);
+            console.error('Error ading user:', error);
         }
     };
 
